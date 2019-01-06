@@ -8,8 +8,6 @@ from collections import defaultdict
 if __name__ == '__main__':
     df = read_csv(sys.argv[1], index_col=0)
     tables = df.columns.values
-    print(df.index.values)
-    print(df)
 
     session_length_minutes = 15
     seats = 4
@@ -31,10 +29,8 @@ if __name__ == '__main__':
     seen = defaultdict(lambda: False)
 
     for table in tables:
-        print('filling table' + table)
         col = df.loc[:, table]
         for person_name, enrolled in col.items():
-            print(person_name)
             if enrolled == 'y':
                 for timeslot, reserved_name in schedule.loc[:, table].items():
                     if seen[timeslot[:-3] + person_name]:
@@ -48,4 +44,4 @@ if __name__ == '__main__':
 
 
 
-    print(schedule)
+    print(schedule.to_csv())
